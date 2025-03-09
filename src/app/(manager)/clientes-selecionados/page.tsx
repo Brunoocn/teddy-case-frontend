@@ -1,10 +1,11 @@
 import ClientsGrid from "@/components/clients/clientsGrid";
-import { Pagination } from "@/components/pagination";
+
 import { Client } from "@/types/Client";
 import { fetchWrapper } from "@/utils/fetchWrapper";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { getToken } from "@/utils/getToken";
-import { cookies } from "next/headers";
+import { getUserId } from "@/utils/getUserId";
+import { ParsedClient } from "../clientes/page";
 
 interface IReponseClients {
   list: Client[];
@@ -15,25 +16,12 @@ interface IReponseClients {
   };
 }
 
-export type ParsedClient = {
-  id: string;
-  name: string;
-  companyValue: string;
-  salary: string;
-  isSelect: boolean;
-};
-
-async function getUserId() {
-  const nextCookies = await cookies();
-  const userInfos = JSON.parse(nextCookies.get("TEDDY::USER")?.value || "{}");
-  return userInfos.id;
-}
-async function requestClients(pageSize: number, page: number) {
+async function requestClientsSelected(pageSize: number, page: number) {
   const token = await getToken();
   const userId = await getUserId();
 
   const data: IReponseClients = await fetchWrapper(
-    `clients?userId=${userId}&pageSize=${pageSize}&page=${page}`,
+    `clients?userId=${userId}&pageSize=${pageSize}&page=${page}&isSelect=true`,
     {
       method: "GET",
       headers: { Authorization: `Bearer ${token}` },
@@ -54,7 +42,7 @@ async function requestClients(pageSize: number, page: number) {
   };
 }
 
-export default async function Clients({
+export default async function SelectClients({
   searchParams,
 }: {
   searchParams?: {
@@ -64,21 +52,18 @@ export default async function Clients({
   const ITEMS_PER_PAGE: number = 12;
   const params = await searchParams;
   const page = Number(params) || 1;
-  const response = await requestClients(ITEMS_PER_PAGE, page);
-  const totalCountClients = response.paging.total;
+  const response = await requestClientsSelected(ITEMS_PER_PAGE, page);
   const messageQuantityClients =
     response.paging.total === 1 ? "Cliente" : "Clientes";
+  const messageTotalClients =
+    response.paging.total === 0
+      ? "Nenhum cliente selecionado."
+      : `${messageQuantityClients} selecionados:`;
 
   return (
     <main className="p-4">
-      <p className="text-black mb-[10px]">
-        <span className="text-black font-semibold mr-[5px]">
-          {totalCountClients}
-        </span>
-        {messageQuantityClients} encontrados:
-      </p>
+      <p className="text-black mb-[10px]">{messageTotalClients}</p>
       <ClientsGrid clients={response.clients} />
-      <Pagination totalCount={totalCountClients || 10} />
     </main>
   );
 }
