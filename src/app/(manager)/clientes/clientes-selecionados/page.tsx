@@ -5,7 +5,8 @@ import { fetchWrapper } from "@/utils/fetchWrapper";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { getToken } from "@/utils/getToken";
 import { getUserId } from "@/utils/getUserId";
-import { ParsedClient } from "../clientes/page";
+import { ParsedClient } from "../page";
+import { Pagination } from "@/components/pagination";
 
 interface IReponseClients {
   list: Client[];
@@ -50,7 +51,7 @@ export default async function SelectClients({
   };
 }) {
   const ITEMS_PER_PAGE: number = 12;
-  const params = await searchParams;
+  const params = searchParams;
   const page = Number(params) || 1;
   const response = await requestClientsSelected(ITEMS_PER_PAGE, page);
   const messageQuantityClients =
@@ -59,11 +60,15 @@ export default async function SelectClients({
     response.paging.total === 0
       ? "Nenhum cliente selecionado."
       : `${messageQuantityClients} selecionados:`;
-
+  const totalCountClients = response.paging.total;
   return (
     <main className="p-4">
       <p className="text-black mb-[10px]">{messageTotalClients}</p>
       <ClientsGrid clients={response.clients} />
+
+      {response.paging.total >= 1 && (
+        <Pagination totalCount={totalCountClients || 10} />
+      )}
     </main>
   );
 }

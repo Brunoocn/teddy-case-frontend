@@ -62,12 +62,9 @@ export default async function Clients({
   };
 }) {
   const ITEMS_PER_PAGE: number = 12;
-  const params = await searchParams;
-  const page = Number(params) || 1;
+  const page = Number(searchParams?.page) || 1;
   const response = await requestClients(ITEMS_PER_PAGE, page);
   const totalCountClients = response.paging.total;
-  const messageQuantityClients =
-    response.paging.total === 1 ? "Cliente" : "Clientes";
 
   return (
     <main className="p-4">
@@ -75,10 +72,12 @@ export default async function Clients({
         <span className="text-black font-semibold mr-[5px]">
           {totalCountClients}
         </span>
-        {messageQuantityClients} encontrados:
+        clientes encontrados:
       </p>
       <ClientsGrid clients={response.clients} />
-      <Pagination totalCount={totalCountClients || 10} />
+      {response.paging.total >= 1 && (
+        <Pagination totalCount={totalCountClients || 10} />
+      )}
     </main>
   );
 }
