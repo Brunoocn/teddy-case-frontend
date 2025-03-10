@@ -1,12 +1,10 @@
-// import NavPath from '@/components/navPath';
-// import PageHeader from '@/components/header';
-// import PageNavbar from '@/components/navbar';
-import PageHeader from '@/components/header';
-import type { Metadata } from 'next';
+
+import PageHeader from "@/components/header";
+import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'Teddy - Manager',
-  description: 'Teddy Manager',
+  title: "Teddy - Manager",
+  description: "Teddy Manager",
 };
 
 export default function ManagerLayout({
@@ -17,9 +15,7 @@ export default function ManagerLayout({
   return (
     <>
       <PageHeader />
-      {/* <PageNavbar />
-      <NavPath /> */}
-      <main className='mx-[100px] mt-[24px]'>{children}</main>
+      <main className="mx-[100px] mt-[24px]">{children}</main>
     </>
   );
 }

@@ -194,7 +194,7 @@ export default function FormClient({ currentClient }: FormClientProps) {
           <div className="flex justify-center mt-[20px]">
             <Button
               type="submit"
-              className="w-[200px] transform rounded-sm bg-transparent border-orange-500 border-2 px-4 py-2 tracking-wide text-orange-500 transition-colors duration-200 hover:border-color-600 focus:bg-orange-600 focus:outline-none mt-[20px] cursor-pointer"
+              className="w-[200px] transform rounded-sm bg-transparent border-orange-500 border-2 px-4 py-2 tracking-wide text-orange-500 transition-colors duration-200 hover:border-color-600 focus:outline-none mt-[20px] cursor-pointer"
             >
               {formProps.watch("isUpdate") ? "Atualizar" : "Criar"}
             </Button>

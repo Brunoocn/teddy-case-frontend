@@ -6,6 +6,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { getToken } from "@/utils/getToken";
 import { getUserId } from "@/utils/getUserId";
 import { ParsedClient } from "../page";
+import CleanClientsSelectedButton from "@/components/clients/cleanClientsSelectedButton";
 import { Pagination } from "@/components/pagination";
 
 interface IReponseClients {
@@ -44,13 +45,11 @@ async function requestClientsSelected(pageSize: number, page: number) {
   };
 }
 
-export default async function SelectClients(
-  props: {
-    searchParams?: Promise<{
-      page?: string;
-    }>;
-  }
-) {
+export default async function SelectClients(props: {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+}) {
   const searchParams = await props.searchParams;
   const ITEMS_PER_PAGE: number = 12;
   const page = Number(searchParams) || 1;
@@ -63,15 +62,17 @@ export default async function SelectClients(
       ? "Nenhum cliente selecionado."
       : `${messageQuantityClients} selecionados:`;
 
-
   const totalCountClients = response.paging.total;
+
   return (
     <main className="p-4">
       <p className="text-black mb-[10px]">{messageTotalClients}</p>
       <ClientsGrid clients={response.clients} />
-
       {response.paging.total >= 1 && (
-        <Pagination totalCount={totalCountClients || 10} />
+        <>
+          <CleanClientsSelectedButton />
+          <Pagination totalCount={totalCountClients || 10} />
+        </>
       )}
     </main>
   );
