@@ -17,7 +17,6 @@ export default function ClientCard({ client }: ClientCardProps) {
   async function changeIsSelect() {
     try {
       const token = getCookie("TEDDY::TOKEN");
-      console.log(token, "token");
       await fetchWrapper(`clients/${client.id}/select`, {
         method: "PATCH",
         headers: {
@@ -27,6 +26,15 @@ export default function ClientCard({ client }: ClientCardProps) {
         body: JSON.stringify({
           isSelect: !client.isSelect,
         }),
+      });
+      toast({
+        variant: "sucess",
+        title: "Sucesso!",
+        description: (
+          <div className="text-sucess-foreground">
+            Cliente {client.name} foi {client.isSelect && "des"}selecionado
+          </div>
+        ),
       });
 
       router.refresh();
@@ -53,8 +61,13 @@ export default function ClientCard({ client }: ClientCardProps) {
         </p>
       </div>
       <div className="flex justify-between mt-4">
-        <IsSelect isSelect={client.isSelect} onChange={changeIsSelect} />
-        <Pencil className="h-[20px] w-[20px] text-black" />
+        <IsSelect isSelect={client.isSelect} onClick={changeIsSelect} />
+        <button
+          className="bg-none cursor-pointer"
+          onClick={() => router.push(`/clientes/${client.id}`)}
+        >
+          <Pencil className="h-[20px] w-[20px] text-black" />
+        </button>
         <Trash className="h-[20px] w-[20px] text-red-400" />
       </div>
     </div>

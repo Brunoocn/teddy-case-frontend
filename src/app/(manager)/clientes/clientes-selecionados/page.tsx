@@ -35,6 +35,7 @@ async function requestClientsSelected(pageSize: number, page: number) {
     companyValue: formatCurrency(client.companyValue),
     salary: formatCurrency(client.salary),
     isSelect: client.isSelect,
+    userId,
   }));
 
   return {
@@ -56,10 +57,13 @@ export default async function SelectClients({
   const response = await requestClientsSelected(ITEMS_PER_PAGE, page);
   const messageQuantityClients =
     response.paging.total === 1 ? "Cliente" : "Clientes";
+    
   const messageTotalClients =
     response.paging.total === 0
       ? "Nenhum cliente selecionado."
       : `${messageQuantityClients} selecionados:`;
+
+
   const totalCountClients = response.paging.total;
   return (
     <main className="p-4">

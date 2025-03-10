@@ -1,10 +1,12 @@
 import ClientsGrid from "@/components/clients/clientsGrid";
 import { Pagination } from "@/components/pagination";
+import { Button } from "@/components/ui/button";
 import { Client } from "@/types/Client";
 import { fetchWrapper } from "@/utils/fetchWrapper";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { getToken } from "@/utils/getToken";
-import { cookies } from "next/headers";
+import { getUserId } from "@/utils/getUserId";
+import Link from "next/link";
 
 interface IReponseClients {
   list: Client[];
@@ -21,13 +23,8 @@ export type ParsedClient = {
   companyValue: string;
   salary: string;
   isSelect: boolean;
+  userId: string;
 };
-
-async function getUserId() {
-  const nextCookies = await cookies();
-  const userInfos = JSON.parse(nextCookies.get("TEDDY::USER")?.value || "{}");
-  return userInfos.id;
-}
 async function requestClients(pageSize: number, page: number) {
   const token = await getToken();
   const userId = await getUserId();
@@ -46,6 +43,7 @@ async function requestClients(pageSize: number, page: number) {
     companyValue: formatCurrency(client.companyValue),
     salary: formatCurrency(client.salary),
     isSelect: client.isSelect,
+    userId: userId,
   }));
 
   return {
@@ -75,6 +73,11 @@ export default async function Clients({
         clientes encontrados:
       </p>
       <ClientsGrid clients={response.clients} />
+      <Link href="/clientes/criar">
+        <Button className="w-full transform rounded-sm bg-transparent border-orange-500 border-2 px-4 py-2 tracking-wide text-orange-500 transition-colors duration-200 hover:border-color-600 focus:bg-orange-600 focus:outline-none mt-[20px] cursor-pointer">
+          Criar Cliente
+        </Button>
+      </Link>
       {response.paging.total >= 1 && (
         <Pagination totalCount={totalCountClients || 10} />
       )}
