@@ -23,13 +23,14 @@ async function requestGetClientById(
   return data;
 }
 
-export default async function UpdateClient({
-  params,
-}: {
-  params?: {
-    clientId: string;
-  };
-}) {
+export default async function UpdateClient(
+  props: {
+    params?: Promise<{
+      clientId: string;
+    }>;
+  }
+) {
+  const params = await props.params;
   if (!params?.clientId || !params) {
     return;
   }

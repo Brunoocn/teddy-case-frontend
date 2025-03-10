@@ -52,13 +52,14 @@ async function requestClients(pageSize: number, page: number) {
   };
 }
 
-export default async function Clients({
-  searchParams,
-}: {
-  searchParams?: {
-    page?: string;
-  };
-}) {
+export default async function Clients(
+  props: {
+    searchParams?: Promise<{
+      page?: string;
+    }>;
+  }
+) {
+  const searchParams = await props.searchParams;
   const ITEMS_PER_PAGE: number = 12;
   const page = Number(searchParams?.page) || 1;
   const response = await requestClients(ITEMS_PER_PAGE, page);
