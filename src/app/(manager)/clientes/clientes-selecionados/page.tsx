@@ -53,8 +53,7 @@ export default async function SelectClients(
 ) {
   const searchParams = await props.searchParams;
   const ITEMS_PER_PAGE: number = 12;
-  const params = searchParams;
-  const page = Number(params) || 1;
+  const page = Number(searchParams) || 1;
   const response = await requestClientsSelected(ITEMS_PER_PAGE, page);
   const messageQuantityClients =
     response.paging.total === 1 ? "Cliente" : "Clientes";

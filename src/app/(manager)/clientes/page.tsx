@@ -75,7 +75,7 @@ export default async function Clients(
       </p>
       <ClientsGrid clients={response.clients} />
       <Link href="/clientes/criar">
-        <Button className="w-full transform rounded-sm bg-transparent border-orange-500 border-2 px-4 py-2 tracking-wide text-orange-500 transition-colors duration-200 hover:border-color-600 focus:bg-orange-600 focus:outline-none mt-[20px] cursor-pointer">
+        <Button className="w-full transform rounded-sm bg-transparent border-orange-500 border-2 px-4 py-2 tracking-wide text-orange-500 transition-colors duration-200 hover:border-color-600 mt-[20px] cursor-pointer">
           Criar Cliente
         </Button>
       </Link>

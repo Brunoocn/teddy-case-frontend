@@ -23,19 +23,19 @@ async function requestGetClientById(
   return data;
 }
 
-export default async function UpdateClient(
-  props: {
-    params?: Promise<{
-      clientId: string;
-    }>;
-  }
-) {
+export default async function UpdateClient(props: {
+  params?: Promise<{
+    clientId: string;
+  }>;
+}) {
   const params = await props.params;
-  if (!params?.clientId || !params) {
+
+  if (!params) {
     return;
   }
+  
   const currentClient: IReponseGetClient = await requestGetClientById(
-    params?.clientId || ""
+    params?.clientId
   );
 
   return <FormClient currentClient={currentClient} />;
