@@ -64,7 +64,7 @@ export default function Signup() {
     <>
       <div className="relative flex min-h-screen flex-col justify-center overflow-hidden bg-white">
         <div className="m-auto w-full rounded-md bg-white p-6  lg:max-w-xl">
-          <h1 className="text-center text-3xl font-semibold text-orange-500">
+          <h1 className="text-center text-2xl font-medium text-black">
             Cadastro
           </h1>
           <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
