@@ -1,36 +1,107 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## 🧪 Tecnologias
 
-## Getting Started
+Esse projeto foi desenvolvido com as seguintes tecnologias:
 
-First, run the development server:
+- [React](https://react.dev)
+- [Nextjs](https://nextjs.org)
+
+## 🚀 Como executar
+
+Clone o projeto e acesse a pasta do mesmo.
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+$ git clone https://github.com/Brunoocn/teddy-case-frontend.git
+$ cd teddy-case-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Para iniciá-lo, siga os passos abaixo:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+#Instale as dep
+yarn install
+#rode o projeto
+yarn dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+O server irá subir na porta http://localhost:3000.
 
-## Learn More
+Vale lembrar que você deve configurar .env como o .env.sample
 
-To learn more about Next.js, take a look at the following resources:
+# ✅ Sobre o projeto
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- O projeto foi desenvolvido com as melhores praticas de front, optei por usar o
+nextjs, por conta de hoje na propria documentação do React é recomendavel utilizar o 
+nextjs, e além de conseguirmos trazer um melhor desempenho para aplicação.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# 📄 Perguntas sobre o desenvolvimento
 
-## Deploy on Vercel
+1. Quanto tempo levaria?
+2. Quantos desenvolvedores?
+3. Qual a senioridade dos desenvolvedores?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Para responder melhor a pergunta seria necessário ter o prazo da demanda e sua importância.
+Como não estava descrito no case, tomei a liberdade de fazer duas simulações.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+CASE 1: demanda de grande importancia, para um novo cliente especifico que deve ser entre o quanto antes.
+
+- 1 Sênior no front
+- 1 Pleno back
+
+A demanda deve estar pronta em 1 semana, pronta para ser entregue na segunda
+dando espaço para resolver eventuais conflitos, ou outras demandas que possam aparecer.
+
+CASE 2:
+Demanda tranquila, com prazo de 2 semanas semanas até produção ou uma sprint (2 semanas)
+
+- 1 junior e 1 pleno
+  ou
+- 2 juniors com auxilio para algumas funções especificas como CI/CD e observabilidade.
+
+Independente dos 2 casos deve ser levado em consideração a equipe no momento e a familiaridade com as tecnologias usadas (curva de aprendizado).
+
+# ⚗️ Arquitetura
+
+# Componentes da arquitetura
+
+![Componentes Da Arquitetura](./docs/assets/components-sistema.png)
+
+# MANEIRA FACIL
+
+- Gerenciada pela AWS
+- Elastic Beanstalk.
+- Amplify.
+- Sobe ec2/sobe loadBalancer/ versionamento.
+- Conecta logs com cloudwatch.
+- Facil de vincular com o repositorio.
+- Auto update on commit.
+  <br/>
+- Pros
+  - Facilidade e agilidade, facil criação e manutenção.
+- Contras
+  - Por ser gerenciado é mais caro, sobe uma maquina dimensionada anteriormente
+    e utiliza regras de load balancer pra fazer upscale.
+
+![Arquitetura Facil](./docs/assets/arquitetura-simples.png)
+
+# MANEIRA BARATA
+
+- Utilizar um ECS (mais barato da AWS).
+- Subir o frontend em uma CDN com s3.
+- Container mais barato da aws principalmente falando das estancias spot.
+- Versionamento de imagem.
+- CDN aponta para o build no s3 e faz utilização do cache.
+  <br/>
+- Pros
+  - Principalmente custo e controle.
+- Contras
+  - Dificuldade inicial, precisa organizar os serviços ou fazer utilização de IaC(terraform,open tofu, cloudformation).
+  - Tem necessidade de criar um CI/CD especifico para isso.
+
+![Arquitetura Barata](./docs/assets/arquitetura-barata.png)
+
+# Pontos a serem discutidos
+
+- LOGS - É possivel usar aws cloud watch, grafana, ou qualquer outro agent do mercado.
+- Tracing - É possivel utilizar o aws x-ray ou subir na mão alguma outra solução open telemtry.
+- VPN (infra fechada)
+
