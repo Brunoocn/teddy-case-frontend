@@ -6,7 +6,6 @@ import { useRouter, useSelectedLayoutSegments } from "next/navigation";
 export default function MenuItems() {
   const router = useRouter();
   const pathSegments = useSelectedLayoutSegments();
-  console.log(pathSegments);
   const Logout = () => {
     deleteCookie("TEDDY::TOKEN");
     deleteCookie("TEDDY::USER");
